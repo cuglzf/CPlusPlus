@@ -182,3 +182,94 @@ void RPrintListByR(ListNode *pHead)
 		printf("%d", pHead->key);
 	}
 }
+
+/*
+将两个有序的链表合并成一个有序的链表
+思路：这个类似归并排序。尤其注意两个链表都为空，和其中一个为空时的情况。只需要O（1）的空间。时间复杂度为O（max(len1, len2)）
+*/
+
+ListNode * MergeSortedList(ListNode *pHead1, ListNode *pHead2)
+{
+	//1、判断链表是否为空
+	if (pHead1 == nullptr)
+		return pHead2;
+	if (pHead2 == nullptr)
+		return pHead1;
+
+	ListNode *pNode1 = pHead1;
+	ListNode *pNode2 = pHead2;
+	ListNode *mergeHead = nullptr;
+
+	//3、将新的链表头指针指向第一个节点
+	if (pNode1->key < pNode2->key)
+	{
+		mergeHead = pNode1;
+		mergeHead->next = nullptr;
+		pNode1 = pNode1->next;
+	}
+	else
+	{
+		mergeHead = pNode2;
+		mergeHead->next = nullptr;
+		pNode2 = pNode2->next;
+	}
+
+	//4、将新的链表的尾指针指向新链表的尾节点
+	ListNode *pTemp = mergeHead;
+
+	//5、遍历两个链表
+	while (pNode1 != nullptr && pNode2 != nullptr)
+	{
+		if (pNode1->key < pNode2->key)
+		{
+			pTemp->next = pNode1;
+			pNode1 = pNode1->next;
+			pTemp = pTemp->next;
+			pTemp->next = nullptr;
+		}
+		else
+		{
+			pTemp->next = pNode2;
+			pNode2 = pNode2->next;
+			pTemp = pTemp->next;
+			pTemp->next = nullptr;
+		}
+	}
+
+	//6、将剩余链表节点接入到新链表的尾部
+	if (pNode1 != nullptr)
+	{
+		pTemp->next = pNode1;
+	}
+	else
+	{
+		pTemp->next = pNode2;
+	}
+
+	//7、返回新链表的头指针
+	return mergeHead;
+}
+
+//递归版
+ListNode *MergeSortedListR(ListNode *pHead1, ListNode *pHead2)
+{
+	if (pHead1 == nullptr)
+		return pHead2;
+	if (pHead2 == nullptr)
+		return pHead1;
+
+	ListNode *mergeHead = nullptr;
+	if (pHead1->key < pHead2->key)
+	{
+		mergeHead = pHead1;
+		mergeHead->next = MergeSortedListR(pHead1->next,pHead2);
+	}
+	else
+	{
+		mergeHead = pHead2;
+		mergeHead->next = MergeSortedListR(pHead1, pHead2->next);
+	}
+
+	return mergeHead;
+
+}
