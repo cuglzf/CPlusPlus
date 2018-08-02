@@ -273,3 +273,117 @@ ListNode *MergeSortedListR(ListNode *pHead1, ListNode *pHead2)
 	return mergeHead;
 
 }
+
+/*
+判断一个单链表链表是否有环
+思路：如果链表有环，则从头遍历是永远走不到尾的，因此采用快慢指针，如果两个
+指针相遇，则证明有环
+步骤：
+1、判断头指针和下一个指针是否为空，任意一个为空表示链表有限
+2、使快指针走两步，慢指针走一步
+3、判断两个指针是否相遇
+*/
+bool HasCircle(ListNode *pHead)
+{
+	ListNode *pFast = pHead;
+	ListNode *pSlow = pHead;
+
+	while (pFast != nullptr && pFast->next != nullptr)
+	{
+		pFast = pFast->next->next;
+		pSlow = pSlow->next;
+
+		//若相遇则表示有环
+		if (pFast == pSlow)
+		{
+			return true;
+		}
+		
+	}
+	return false;
+}
+
+/*
+判断两个单链表是否相交
+思路：如果两个链表相交于某一节点，那么在这个相交节点之后的所有节点都是两个链表所共有的。也就是说，如果两个链表相交，那么最后一个节点肯定是共有的
+此时两个链表构成了Y形状，先遍历第一个链表，记住最后一个节点，然后遍历第二个链表，到最后一个节点时和第一个链表的最后一个节点做比较，
+如果相同，则相交，否则不相交。时间复杂度为O(len1+len2)，因为只需要一个额外指针保存最后一个节点地址
+*/
+bool IsIntersected(ListNode *pHead1, ListNode *pHead2)
+{
+	if (pHead1 == nullptr || pHead2 == nullptr)
+		return false;
+
+	ListNode *pTail1 = pHead1;
+	while (pTail1->next != nullptr)
+		pTail1 = pTail1->next;
+
+	ListNode *pTail2 = pHead2;
+	while (pTail2->next != nullptr)
+		pTail2 = pTail2->next;
+
+	return pTail1 == pTail2;
+}
+
+/*
+求两个单链表相交的第一个节点
+思路：在上一个问题上，这个问题做了进一步扩展，首先
+对第一个链表遍历，计算长度len1，同时保存最后一个节点的地址。
+对第二个链表遍历，计算长度len2，同时检查最后一个节点是否和第一个链表的最后一个节点相同，若不相同，不相交，结束。
+两个链表均从头节点开始，假设len1大于len2，那么将第一个链表先遍历len1-len2个节点，此时两个链表当前节点到第一个相交节点的距离就相等了，然后一起向后遍历，知道两个节点的地址相同。
+时间复杂度，O(len1+len2)
+*/
+ListNode *GetFirstCommonNode(ListNode *pHead1, ListNode *pHead2)
+{
+	if (pHead1 == nullptr || pHead2 == nullptr)
+		return nullptr;
+
+	//得到pHead1的尾节点
+	ListNode *pTail1 = pHead1;
+	int len1 = 1;
+	while (pTail1->next != nullptr)
+	{
+		pTail1 = pTail1->next;
+		++len1;
+	}
+
+	//得到pHead2的尾节点
+	ListNode *pTail2 = pHead2;
+	int len2 = 1;
+	while (pTail2->next != nullptr)
+	{
+		pTail2 = pTail2->next;
+		++len2;
+	}
+
+	//判断两个尾节点是否相等
+	if (pTail1 != pTail2)
+		return nullptr;
+
+	pTail1 = pHead1;
+	pTail2 = pHead2;
+
+	//时长的那个链表先走长出来的那部分
+	if (len1 > len2)
+	{
+		int k = len1 - len2;
+		while (k--)
+			pTail1 = pTail1->next;
+	}
+	else
+	{
+		int k = len2 - len1;
+		while (k--)
+			pTail2 = pTail2->next;
+	}
+
+	//两个指针再同时走，知道相遇
+	while (pTail1 != pTail2)
+	{
+		pTail1 = pTail1->next;
+		pTail2 = pTail2->next;
+	}
+
+	//返回相遇节点
+	return pTail1;
+}
