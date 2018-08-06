@@ -2,7 +2,7 @@
 
 
 /*
-剑指offer第三题：
+剑指offer面试题3：
 在一个长度为n的数组里所有数字都在0~n-1之间，有些数字是重复的，请找事任意一个重复的数字
 思路：
 1、将数组排序，然后从头遍历即可，时间复杂度O(n)
@@ -59,4 +59,45 @@ bool duplicate(int numbers[], int length, int *deplication)
 	}
 
 	return false;
+}
+
+/*
+剑指offer面试题4
+在一个从左到右从上到下都是递增的二维数组中，查找一个整数
+思路：每次与最右上角元素比较，比最右上角元素大，则表示查找元素可能在
+此列，如果比右上角元素小，则表示在其他列。查找结束的条件就是当比较到最后一行
+或者一列仍然没有找到，则表示找不到了。
+这个题目选取的比较元素可以从右上角或者左下角开始，但是左上和右下不能
+还有一个思考，能不能每次选取中间的数字比较，这样的话相比这种方法，比较次数减少
+一半
+*/
+bool FindInMatrix(int *matrix, int rows, int columns, int number)
+{
+	bool found = false;
+	//矩阵是否存在
+	if (matrix == nullptr || rows <= 0 || columns <= 0)
+	{
+		return found;
+	}
+
+	int row = 0;
+	int column = columns - 1;
+	while (row < rows && column >= 0)
+	{
+		if (matrix[row*rows + column] == number)
+		{
+			found = true;
+			break;
+		}
+		else if (matrix[row*rows+column] > number)
+		{
+			--column;
+		}
+		else
+		{
+			++row;
+		}
+	}
+
+	return found;
 }
