@@ -79,13 +79,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
+    <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="list.h" />
+    <ClInclude Include="Sort.h" />
+    <ClInclude Include="Stack_Queue.h" />
     <ClInclude Include="String.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
+    <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="list.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sort.cpp" />
+    <ClCompile Include="Stack_Queue.cpp" />
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
