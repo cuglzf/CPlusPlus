@@ -30,3 +30,5 @@ bool IsIntersected(ListNode *pHead1, ListNode *pHead2);
 
 ListNode *GetFirstCommonNode(ListNode *pHead1, ListNode *pHead2);
 
+ListNode *GetFirstNodeInCircle(ListNode *pHead);
+

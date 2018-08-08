@@ -1,6 +1,7 @@
 #include "list.h"
 
 using namespace std;
+
 /*
 统计链表中的节点的个数
 步骤：
@@ -380,4 +381,86 @@ ListNode *GetFirstCommonNode(ListNode *pHead1, ListNode *pHead2)
 
 	//返回相遇节点
 	return pTail1;
+}
+
+/*
+已知一个单链表中存在环，求进入环中的第一个节点
+首先判断是否存在环，若不存在结束。在环中的利用快慢指针找到相遇的那个节点处断开（当然函数结束时不能破坏原链表），
+这样就形成了两个相交的单链表，这两个单链表其中一个是以整个链表头结点作为它的头结点，另一个
+是以在环内断开节点的下一个节点作为头结点，这样求进入环中的第一个节点也就转换成了求两个
+单链表相交的第一个节点。
+
+*/
+
+ListNode *GetFirstNodeInCircle(ListNode *pHead)
+{
+	if (pHead == nullptr || pHead->next == nullptr)
+		return nullptr;
+
+	//找到环内相遇的节点
+	ListNode *pFast = pHead->next;
+	ListNode *pSlow = pHead;
+
+	while (pFast->next != nullptr)
+	{
+		//慢指针走一步
+		pSlow = pSlow->next;
+
+		//快指针走两步
+		pFast = pFast->next;
+		if (pFast->next != nullptr)
+			pFast = pFast->next;
+	}
+
+	if (pFast == nullptr )
+		return nullptr;
+
+	//一个单链表以整个链表的头结点作为头结点
+	ListNode *pHead1 = pHead;
+	//一个单链表以环内相遇的节点的下一个节点作为头节点
+	ListNode *pHead2 = pFast->next;
+	//环内相遇节点作为尾节点
+	ListNode *pTail = pFast;
+
+	//计算第一个单链表的长度
+	int len1 = 1;
+	while (pHead1 != pTail)
+	{
+		++len1;
+		pHead1 = pHead1->next;
+	}
+
+	//计算第二个单链表的长度
+	int len2 = 1;
+	while (pHead2 != pTail)
+	{
+		++len2;
+		pHead2 = pHead2->next;
+	}
+
+	pHead1 = pHead;
+	pHead2 = pFast;
+
+	//让长的那个链表先走|len2-len1|步
+	if (len1 > len2)
+	{
+		int k = len1 - len2;
+		while (k--)
+			pHead1 = pHead1->next;
+	}
+	else
+	{
+		int k = len2 - len1;
+		while (k--)
+			pHead2 = pHead2->next;
+	}
+
+	//让两个指针同时走，相遇的第一个节点就是所求节点
+	while (pHead1 != pHead2)
+	{
+		pHead1 = pHead1->next;
+		pHead2 = pHead2->next;
+	}
+
+	return pHead1;
 }
