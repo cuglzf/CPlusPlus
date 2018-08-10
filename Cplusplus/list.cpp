@@ -92,7 +92,7 @@ ListNode *RGetKthNode(ListNode *pHead, unsigned int k)
 	}
 
 	//3、节点个数小于K，返回
-	if (k > 1)
+	if (k > 1 )
 		return nullptr;
 
 	//4、两个指针一起走，直到前面的指针指向最后一个节点
