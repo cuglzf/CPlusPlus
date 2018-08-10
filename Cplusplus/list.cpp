@@ -391,7 +391,6 @@ ListNode *GetFirstCommonNode(ListNode *pHead1, ListNode *pHead2)
 单链表相交的第一个节点。
 
 */
-
 ListNode *GetFirstNodeInCircle(ListNode *pHead)
 {
 	if (pHead == nullptr || pHead->next == nullptr)
@@ -463,4 +462,53 @@ ListNode *GetFirstNodeInCircle(ListNode *pHead)
 	}
 
 	return pHead1;
+}
+
+/*
+给出一单链表头指针pHead和一节点指针pToBeDeleted，O(1)时间复杂度删除节点pToBeDeleted
+对于删除节点，我们普通的思路就是让该节点的前一个节点指向该节点的下一个节点，这种情况需要
+遍历找到该节点的前一个节点，时间复杂度为O(n)。对于链表，链表中的每个节点结构都是一样的，
+所以我们可以把该节点的下一个节点的数据复制到该节点，然后删除下一个节点即可。要注意pToBeDeleted
+指向的是最后一个节点的情况，这个时候只能用常见的方法来操作，先找到前一个节点，但总体的平均时间复杂度还是O(1)。
+思路：
+这个题在删除的时候需要考虑以下几种情况：
+1、要删除的是尾节点
+  1.1、链表只有一个节点，头指针置NULL
+  1.2、链表多个节点，遍历找到前面一个节点，next置NULL
+2、要删除的是非尾节点
+  只需要将它后面节点的值赋给它，删除后面的节点
+*/
+void Delete(ListNode **pHead, ListNode *pToBeDeleted)
+{
+	//边界检查
+	if (*pHead == nullptr || pToBeDeleted == nullptr)
+		return;
+
+	//正常情况
+	if (pToBeDeleted->next != nullptr)
+	{
+		ListNode *pTemp = pToBeDeleted->next;
+		pToBeDeleted->key = pTemp->key;
+		pToBeDeleted->next = pTemp->next;
+		delete pTemp;
+	}
+	else
+	{
+		//只有一个节点
+		if (*pHead == pToBeDeleted)
+		{
+			*pHead = nullptr;
+			delete pToBeDeleted;
+		}
+		else //多个节点，并且要删除尾节点
+		{
+			ListNode *pNode = *pHead;
+			while (pNode->next != pToBeDeleted && pNode->next != nullptr)
+				pNode = pNode->next;
+
+			pNode->next = nullptr;
+			delete pToBeDeleted;
+		}
+	}
+
 }
