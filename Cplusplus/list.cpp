@@ -1,6 +1,7 @@
 #include "list.h"
 
 using namespace std;
+
 /*
 统计链表中的节点的个数
 步骤：
@@ -91,7 +92,7 @@ ListNode *RGetKthNode(ListNode *pHead, unsigned int k)
 	}
 
 	//3、节点个数小于K，返回
-	if (k > 1)
+	if (k > 1 )
 		return nullptr;
 
 	//4、两个指针一起走，直到前面的指针指向最后一个节点
@@ -380,4 +381,134 @@ ListNode *GetFirstCommonNode(ListNode *pHead1, ListNode *pHead2)
 
 	//返回相遇节点
 	return pTail1;
+}
+
+/*
+已知一个单链表中存在环，求进入环中的第一个节点
+首先判断是否存在环，若不存在结束。在环中的利用快慢指针找到相遇的那个节点处断开（当然函数结束时不能破坏原链表），
+这样就形成了两个相交的单链表，这两个单链表其中一个是以整个链表头结点作为它的头结点，另一个
+是以在环内断开节点的下一个节点作为头结点，这样求进入环中的第一个节点也就转换成了求两个
+单链表相交的第一个节点。
+
+*/
+ListNode *GetFirstNodeInCircle(ListNode *pHead)
+{
+	if (pHead == nullptr || pHead->next == nullptr)
+		return nullptr;
+
+	//找到环内相遇的节点
+	ListNode *pFast = pHead->next;
+	ListNode *pSlow = pHead;
+
+	while (pFast->next != nullptr)
+	{
+		//慢指针走一步
+		pSlow = pSlow->next;
+
+		//快指针走两步
+		pFast = pFast->next;
+		if (pFast->next != nullptr)
+			pFast = pFast->next;
+	}
+
+	if (pFast == nullptr )
+		return nullptr;
+
+	//一个单链表以整个链表的头结点作为头结点
+	ListNode *pHead1 = pHead;
+	//一个单链表以环内相遇的节点的下一个节点作为头节点
+	ListNode *pHead2 = pFast->next;
+	//环内相遇节点作为尾节点
+	ListNode *pTail = pFast;
+
+	//计算第一个单链表的长度
+	int len1 = 1;
+	while (pHead1 != pTail)
+	{
+		++len1;
+		pHead1 = pHead1->next;
+	}
+
+	//计算第二个单链表的长度
+	int len2 = 1;
+	while (pHead2 != pTail)
+	{
+		++len2;
+		pHead2 = pHead2->next;
+	}
+
+	pHead1 = pHead;
+	pHead2 = pFast;
+
+	//让长的那个链表先走|len2-len1|步
+	if (len1 > len2)
+	{
+		int k = len1 - len2;
+		while (k--)
+			pHead1 = pHead1->next;
+	}
+	else
+	{
+		int k = len2 - len1;
+		while (k--)
+			pHead2 = pHead2->next;
+	}
+
+	//让两个指针同时走，相遇的第一个节点就是所求节点
+	while (pHead1 != pHead2)
+	{
+		pHead1 = pHead1->next;
+		pHead2 = pHead2->next;
+	}
+
+	return pHead1;
+}
+
+/*
+给出一单链表头指针pHead和一节点指针pToBeDeleted，O(1)时间复杂度删除节点pToBeDeleted
+对于删除节点，我们普通的思路就是让该节点的前一个节点指向该节点的下一个节点，这种情况需要
+遍历找到该节点的前一个节点，时间复杂度为O(n)。对于链表，链表中的每个节点结构都是一样的，
+所以我们可以把该节点的下一个节点的数据复制到该节点，然后删除下一个节点即可。要注意pToBeDeleted
+指向的是最后一个节点的情况，这个时候只能用常见的方法来操作，先找到前一个节点，但总体的平均时间复杂度还是O(1)。
+思路：
+这个题在删除的时候需要考虑以下几种情况：
+1、要删除的是尾节点
+  1.1、链表只有一个节点，头指针置NULL
+  1.2、链表多个节点，遍历找到前面一个节点，next置NULL
+2、要删除的是非尾节点
+  只需要将它后面节点的值赋给它，删除后面的节点
+*/
+void Delete(ListNode **pHead, ListNode *pToBeDeleted)
+{
+	//边界检查
+	if (*pHead == nullptr || pToBeDeleted == nullptr)
+		return;
+
+	//正常情况
+	if (pToBeDeleted->next != nullptr)
+	{
+		ListNode *pTemp = pToBeDeleted->next;
+		pToBeDeleted->key = pTemp->key;
+		pToBeDeleted->next = pTemp->next;
+		delete pTemp;
+	}
+	else
+	{
+		//只有一个节点
+		if (*pHead == pToBeDeleted)
+		{
+			*pHead = nullptr;
+			delete pToBeDeleted;
+		}
+		else //多个节点，并且要删除尾节点
+		{
+			ListNode *pNode = *pHead;
+			while (pNode->next != pToBeDeleted && pNode->next != nullptr)
+				pNode = pNode->next;
+
+			pNode->next = nullptr;
+			delete pToBeDeleted;
+		}
+	}
+
 }
