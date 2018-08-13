@@ -5,6 +5,15 @@
 # build/ 忽略 build/ 目录下的所有文件
 # doc/*.txt 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 
+#过滤数据库文件、sln解决方案文件、配置文件
+*.mdb
+*.ldb
+*.sln.docstates
+*.config
+*.sdf
+*.suo
+*.user
+
 #过滤文件夹Debug、Release、obj
 Debug/
 Release/
@@ -12,10 +21,3 @@ obj/
 /Cplusplus/Debug/
 /Cplusplus/Release/
 
-#过滤数据库文件、sln解决方案文件、配置文件
-*.mdb
-*.ldb
-*.sln
-*.config
-*.sdf
-*.suo

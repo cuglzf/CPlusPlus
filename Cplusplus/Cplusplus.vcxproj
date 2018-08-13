@@ -10,10 +10,27 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Array.cpp" />
+    <ClCompile Include="BinaryTree.cpp" />
+    <ClCompile Include="list.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sort.cpp" />
+    <ClCompile Include="Stack_Queue.cpp" />
+    <ClCompile Include="String.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Array.h" />
+    <ClInclude Include="BinaryTree.h" />
+    <ClInclude Include="list.h" />
+    <ClInclude Include="Sort.h" />
+    <ClInclude Include="Stack_Queue.h" />
+    <ClInclude Include="String.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{403C167A-8C3E-4FC0-A7BA-D1FE95B724EF}</ProjectGuid>
+    <ProjectGuid>{632B70F9-09A1-4FF0-8291-C89D06942FA9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Cplusplus</RootNamespace>
+    <RootNamespace>CPlusPlus</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -77,23 +94,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Array.h" />
-    <ClInclude Include="BinaryTree.h" />
-    <ClInclude Include="list.h" />
-    <ClInclude Include="Sort.h" />
-    <ClInclude Include="Stack_Queue.h" />
-    <ClInclude Include="String.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Array.cpp" />
-    <ClCompile Include="BinaryTree.cpp" />
-    <ClCompile Include="list.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Sort.cpp" />
-    <ClCompile Include="Stack_Queue.cpp" />
-    <ClCompile Include="String.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
