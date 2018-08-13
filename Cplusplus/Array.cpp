@@ -240,3 +240,33 @@ bool HasPathCore(char *matrix, int rows, int columns, int row, int column, const
 
 	return hasPath;
 }
+
+/*
+给定一个数组，求这个数组的最大子序列和
+思路：
+设a[i]为和最大序列的起点，则如果a[i]是负的，那么它不可能代表最优序列的起点，
+因为任何包含a[i]作为起点的子序列都可以通过a[i+1]作起点而得到改进。
+*/
+int MaxSubSum(int *numbers, int length)
+{
+	if (numbers == nullptr || length < 1)
+	{
+		return 0;
+	}
+
+	int sum = 0;
+	int maxSum = 0;
+	for (int i = 0; i < length; i++)
+	{
+		sum += numbers[i];
+		if (sum > maxSum)
+		{
+			maxSum = sum;
+		}
+		else if (sum < 0)
+		{
+			sum = 0;
+		}
+	}
+	return maxSum;
+}

@@ -10,3 +10,5 @@ int Min(int *numbers, int length);
 
 bool HasPathCore(char *matrix, int rows, int columns, int row, int column, const char *str, int &pathLength, bool *visited);
 bool HasPath(char *matrix, int rows, int columns, char *str);
+
+int MaxSubSum(int *numbers, int length);

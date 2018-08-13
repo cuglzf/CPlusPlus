@@ -15,6 +15,7 @@
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="list.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="other.cpp" />
     <ClCompile Include="Sort.cpp" />
     <ClCompile Include="Stack_Queue.cpp" />
     <ClCompile Include="String.cpp" />
@@ -23,6 +24,7 @@
     <ClInclude Include="Array.h" />
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="list.h" />
+    <ClInclude Include="other.h" />
     <ClInclude Include="Sort.h" />
     <ClInclude Include="Stack_Queue.h" />
     <ClInclude Include="String.h" />

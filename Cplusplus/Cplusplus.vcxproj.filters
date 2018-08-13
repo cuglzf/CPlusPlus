@@ -36,6 +36,9 @@
     <ClCompile Include="String.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="other.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="String.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
