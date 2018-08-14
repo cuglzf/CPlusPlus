@@ -13,3 +13,5 @@ static union
 #define ENDINESS ((char)dian_test.l)
 
 void *MemoryCopy(void *dest, void *src, int count);
+
+char *Strcpy(char *dest, const char *src);

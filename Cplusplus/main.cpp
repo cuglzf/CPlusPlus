@@ -8,10 +8,12 @@ using namespace std;
 
 int main()
 {
-	char p[] = "I love you!";
+	char p[] = "abcdefghijklmnopqrst";
+	char q[30]="0123456789";
 	
-	MemoryCopy(p+2,p+5,-1);
-
+	char *str = Strcpy(q, p);
+	//MemoryCopy(p+5,p,3);
+	cout << str << endl;
 	cout << ENDINESS << endl;
 	/*int numbers[7] = { 6, 5, 4, 3, 2, 1, 0 };
 	int deNumber = 0;
