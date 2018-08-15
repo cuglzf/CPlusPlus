@@ -132,3 +132,77 @@ void *Memset(void *dst, int ch, int count)
 
 	return dst;
 }
+
+/*
+C语言库函数之atoi
+这个函数是将字符串转换成整数
+这个函数能跳过开头的空格，遇到一个非要计算的字符就结束
+改进后的atoi可以计算十进制和十六进制，可计算正负
+存在问题：如果字符串过长，转换后的数字超过int范围，这个需要检测
+*/
+int Atoi(const char *nptr)
+{
+	if (nptr == nullptr)
+		return 0;
+
+	//跳过空格
+	while (*nptr == ' ')
+	{
+		++nptr;
+	}
+
+	//正负标记
+	int flag = 1;
+	int ret = 0;
+	if (*nptr == '-')
+	{
+		flag = -1;
+		nptr++;
+	}
+	else if (*nptr == '+')
+	{
+		flag = 1;
+		nptr++;
+	}
+
+	//判断是否是16进制
+	if (*nptr == '0' && *(nptr+1) == 'x' )
+	{
+		++++nptr;
+		while (*nptr != '\0')
+		{
+			if (*nptr >= '0' && *nptr <= '9')
+			{
+				ret = ret * 16 + (*nptr - '0');
+			}
+			else if (*nptr >= 'a' && *nptr <= 'f')
+			{
+				ret = ret * 16 + 10 + (*nptr - 'a');
+			}
+			else
+			{
+				return ret*flag;
+			}
+			++nptr;
+		}
+	}
+
+	//计算
+	while (*nptr != '\0')
+	{
+		if (*nptr >= '0' && *nptr <= '9')
+		{
+			//这里一定不能忘记nptr++，不然死循环
+			ret = ret * 10 + (*nptr++ - '0');
+		}
+		else
+		{
+			return ret*flag;
+		}
+	}
+	return ret*flag;
+}
+
+/*
+C语言库函数之atof
+*/
