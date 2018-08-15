@@ -15,3 +15,7 @@ static union
 void *MemoryCopy(void *dest, void *src, int count);
 
 char *Strcpy(char *dest, const char *src);
+
+int Strcmp(const char *src, const char *dest);
+
+void *Memset(void *dst, int ch, int count);

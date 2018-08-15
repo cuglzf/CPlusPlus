@@ -82,3 +82,53 @@ char *Strcpy(char *dest, const char *src)
 	//返回的是\0
 	return pDest;
 }
+
+/*
+C语言库函数之strcmp
+这个是字符串比较函数，如果s1==s2，返回0；如果s1>s2返回正数；如果s1<s2返回负数
+重点在while循环中，除了计算src和dest值的差值，另外要判断其中一个是否结束
+*/
+int Strcmp(const char *src, const char *dest)
+{
+	if (src == dest)
+		return 0;
+
+	int ret = 0;
+
+	//这里一定要判断src或dest中是否有一个为\0
+	while (!(ret = *(unsigned char *)src - *(unsigned char *)dest) && *dest)
+	{
+		++src;
+		++dest;
+	}
+
+	if (ret < 0)
+		ret = -1;
+	else if (ret > 0)
+		ret = 1;
+
+	return ret;
+}
+
+/*
+C语言库函数之memset
+这个将一块内存全部设置为指定值
+memset使用注意事项：
+1、int型数组除了初始化为0和-1外，其他的值都不行，为什么？看下面的实现，memset是一个字节
+一个字节赋值的，如果初始化为除了0和-1以外的其它值，拿1来说，当把1转为char时，取低8位，也就是
+0x01，然后将0x01赋值给4个字节（int型这里占用4个字节），赋值完成后就是0x01010101，因此会出现
+16843009。为什么0和1赋值可以，0就不用说了吧，0的反码、补码、原码都是其自身，而-1转换成补码取
+低8位是0x11，存入一个字节内存中就是0x11，然后读出来发现是负数，因此变成补码形式就是-1，所以没变
+2、用memset来初始化结构体是最快捷的方法。
+*/
+void *Memset(void *dst, int ch, int count)
+{
+	if (dst == nullptr || count <= 0)
+		return nullptr;
+
+	char *pDst = (char *)dst;
+	while (count--)
+		*pDst++ = (char)ch;
+
+	return dst;
+}

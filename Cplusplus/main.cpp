@@ -10,7 +10,12 @@ int main()
 {
 	char p[] = "abcdefghijklmnopqrst";
 	char q[30]="0123456789";
-	
+	int *pInt = new int[10];
+	Memset(pInt, -1, sizeof(int)* 10);
+	for (auto i = 0; i < 10; i++)
+	{
+		cout << pInt[i] << " " << endl;
+	}
 	char *str = Strcpy(q, p);
 	//MemoryCopy(p+5,p,3);
 	cout << str << endl;
