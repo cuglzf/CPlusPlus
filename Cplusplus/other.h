@@ -21,3 +21,5 @@ int Strcmp(const char *src, const char *dest);
 void *Memset(void *dst, int ch, int count);
 
 int Atoi(const char *nptr);
+
+double Atof(const char *nptr);

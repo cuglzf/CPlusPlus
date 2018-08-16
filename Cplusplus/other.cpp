@@ -200,9 +200,65 @@ int Atoi(const char *nptr)
 			return ret*flag;
 		}
 	}
-	return ret*flag;
+	return ret == 0 ? 0 : ret*flag;
 }
 
 /*
 C语言库函数之atof
+此函数将字符串转成浮点型
 */
+
+double Atof(const char *nptr)
+{
+	double ret = 0.0;
+	int flag = 1;
+	if (nptr == nullptr)
+		return ret;
+
+	//跳过前面的所有空格
+	while (*nptr == ' ')
+		++nptr;
+
+	if (*nptr == '-')
+	{
+		flag = -1;
+		++nptr;
+	}
+	else if (*nptr == '+')
+	{
+		flag = 1;
+		++nptr;
+	}
+
+	while (*nptr != '\0')
+	{
+		if (*nptr >= '0' && *nptr <= '9')
+		{
+			ret = ret * 10 + (*nptr - '0');
+		}
+		else
+			break;
+		++nptr;
+	}
+
+	//如果有小数点
+	if (*nptr != '\0' && *nptr == '.')
+	{
+		int pow = 1;
+		++nptr;
+		while (*nptr != '\0')
+		{
+			if (*nptr >= '0' && *nptr <= '9')
+			{
+				ret = ret * 10 + (*nptr - '0');
+				pow *= 10;
+			}
+			else
+				break;
+			++nptr;
+		}
+		ret = ret / pow;
+	}
+
+	return ret == 0 ? 0 : ret*flag;
+}

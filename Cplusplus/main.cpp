@@ -10,8 +10,11 @@ int main()
 {
 	char p[] = "abcdefghijklmnopqrst";
 	char q[30]="0123456789";
-	
-	cout << Atoi(q) << endl;
+	char test[30] = "-256.0100";
+
+	cout << atof(test) << endl;
+	cout << Atof(test) << endl;
+	//cout << Atoi(q) << endl;
 
 	int *pInt = new int[10];
 	Memset(pInt, -1, sizeof(int)* 10);
