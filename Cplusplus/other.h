@@ -23,3 +23,7 @@ void *Memset(void *dst, int ch, int count);
 int Atoi(const char *nptr);
 
 double Atof(const char *nptr);
+
+void Reverse(char *first, char *last);
+
+char *Itoa(int value, char *string, int radix);

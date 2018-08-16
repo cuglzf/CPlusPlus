@@ -262,3 +262,66 @@ double Atof(const char *nptr)
 
 	return ret == 0 ? 0 : ret*flag;
 }
+
+/*
+字符串反转函数reverse
+这个本来是C++ algorithm中的函数，传入两个迭代器first和last，将
+迭代器所指的字符串反转
+*/
+void Reverse(char *first, char *last)
+{
+
+	//注意这里要考虑元素为奇数个和偶数个
+	//第一个是判断为奇数个，first和last同时指向中间的那个
+	//节点，第二个是两个是不是最后一次交换
+	while ((first != last) && (first < last))
+	{
+		char temp = *last;
+		*last = *first;
+		*first = temp;
+		++first;
+		--last;
+	}
+}
+
+/*
+取绝对值
+*/
+#define Abs(x) ((x) < 0 ? -(x):(x))
+
+/*
+C语言库函数之itoa，请注意，itoa是C语言非标准的扩展函数，不是
+标准的C语言函数windows中在<stdlib.h>文件中
+次函数将整数转为字符串
+*/
+char *Itoa(int value, char *string, int radix)
+{
+	//检查进制是否在2-36
+	if (radix < 2 || radix > 36)
+		return nullptr;
+	char index[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	int number = Abs(value);
+	int i = 0;
+	while (number > 0)
+	{
+		
+		string[i] = index[number%radix];
+		number = number / radix;
+		++i;
+	}
+
+	if (value < 0)
+	{
+		string[i++] = '-';
+	}
+	
+	//计算完一定要反转过来
+	Reverse(string, string + (i-1));
+	if (i == 0)
+	{
+		string[i++] = '0';
+	}
+	//不能忘了字符数组最后一定加结束符
+	string[i] = '\0';
+	return string;
+}

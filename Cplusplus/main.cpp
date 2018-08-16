@@ -2,6 +2,7 @@
 #include "Sort.h"
 #include "other.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <iostream>
 
 using namespace std;
@@ -11,11 +12,15 @@ int main()
 	char p[] = "abcdefghijklmnopqrst";
 	char q[30]="0123456789";
 	char test[30] = "-256.0100";
+	int m = -0;
+
+	char buffer[30];
+	//_itoa_s(m,buffer, 10);
+	Itoa(m, buffer,16);
 
 	cout << atof(test) << endl;
 	cout << Atof(test) << endl;
 	//cout << Atoi(q) << endl;
-
 	int *pInt = new int[10];
 	Memset(pInt, -1, sizeof(int)* 10);
 	for (auto i = 0; i < 10; i++)
