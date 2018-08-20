@@ -14,9 +14,9 @@ int main()
 	char test[30] = "-256.0100";
 	int m = -0;
 
-	char buffer[30];
-	//_itoa_s(m,buffer, 10);
-	Itoa(m, buffer,16);
+	//≤‚ ‘øÏ≈≈
+	int quick[10] = { 54, 5, 78, 2, 4, 6, 98, 12, 9, 8 };
+	QuickSort(quick, 0, 9);
 
 	cout << atof(test) << endl;
 	cout << Atof(test) << endl;
