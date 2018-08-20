@@ -67,8 +67,22 @@ int Partition(int data[], int low, int high)
 */
 void HaepSort(int data[], int n)
 {
+	//这里从n/2-1表示从最底层的那个根节点开始往上
+	//调整，一直调整到根节点，就建立起了一个最大堆
 	for (int i = n / 2 - 1; i >= 0; i--)
 		MaxHeapDown(data, i, n - 1);
+
+	//从最后一个元素开始调整，不断的缩小调整的范围直至第一个元素
+	for (int i = n - 1; i > 0; i--)
+	{
+		//交换data[0]和data[i]。交换后，data[i]是data[0...i]中最大的
+		int temp = data[i];
+		data[i] = data[0];
+		data[0] = temp;
+		//调整data[0...i-1]，使得data[0...i-1]仍然是一个最大堆
+		//即保证data[i-1]是data[0...i-1]中的最大值
+		MaxHeapDown(data, 0, i - 1);
+	}
 }
 
 
@@ -81,5 +95,25 @@ end：截止范围
 */
 void MaxHeapDown(int data[], int start, int end)
 {
+	int c = start;        //当前节点的位置
+	int l = 2 * c + 1;    //左孩子的位置
+	int temp = data[c];   //当前节点的大小
 
+	while (l <= end)
+	{
+		//"l"是左孩子，"l+1"是右孩子
+		if (l < end && data[l] < data[l+1])
+		{
+			l++;                   //左右两孩子中选择较大者，即data[l+1]
+		}
+		if (temp >= data[l])
+			break;                 //调整结束
+		else                       //交换值
+		{
+			data[c] = data[l];
+			data[l] = temp;
+		}
+		c = l;
+		l = 2 * l + 1;
+	}
 }

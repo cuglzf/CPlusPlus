@@ -16,7 +16,8 @@ int main()
 
 	//≤‚ ‘øÏ≈≈
 	int quick[10] = { 54, 5, 78, 2, 4, 6, 98, 12, 9, 8 };
-	QuickSort(quick, 0, 9);
+	HaepSort(quick, 10);
+	//QuickSort(quick, 0, 9);
 
 	cout << atof(test) << endl;
 	cout << Atof(test) << endl;
