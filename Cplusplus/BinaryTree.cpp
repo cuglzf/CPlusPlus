@@ -1,5 +1,12 @@
 #include "BinaryTree.h"
 #include <stdexcept>
+#include <queue>
+#include <stack>
+#include <iostream>
+
+using namespace std;
+
+#define MAX(a,b) (a) > (b) ? (a) : (b)
 
 /*
 剑指offer面试题7
@@ -120,4 +127,159 @@ BinaryTreeNode *GetNext(BinaryTreeNode *pNode)
 	}
 
 	return pNext;
+}
+
+/*
+求二叉树中的节点个数
+思路：
+1、如果二叉树为空，节点个数为0
+2、如果二叉树不为空，二叉树节点个数=左子树节点个数+右子树节点个数+1
+*/
+
+int GetTreeNodeNumR(BinaryTreeNode *root)
+{
+	if (root == nullptr)
+		return 0;
+	return GetTreeNodeNumR(root->left) + GetTreeNodeNumR(root->right) + 1;
+}
+
+//非递归，利用队列，广度遍历二叉树
+int GetTreeNodeNum(BinaryTreeNode *root)
+{
+	if (root == nullptr)
+		return 0;
+	int nodeNum = 0;
+	queue<BinaryTreeNode *> nodeQ;
+	nodeQ.push(root);
+	while (!nodeQ.empty())
+	{
+		BinaryTreeNode * current = nodeQ.front();
+		if (current->left != nullptr)
+		{
+			nodeQ.push(root->left);
+		}
+		if (current->right != nullptr)
+		{
+			nodeQ.push(root->right);
+		}
+		nodeNum++;
+	}
+
+	return nodeNum;
+}
+
+/*
+求二叉树的深度
+思路：
+1、如果二叉树为空，返回0
+2、如果二叉树不为空，二叉树的深度=max（左子树深度，右子树深度）+1
+*/
+int GetTreeDepth(BinaryTreeNode *root)
+{
+	if (root == nullptr)
+		return 0;
+
+	int leftDepth = GetTreeDepth(root->left);
+	int rightDepth = GetTreeDepth(root->right);
+
+	return MAX(leftDepth, rightDepth) + 1;
+}
+
+/*
+二叉树的遍历：前序、中序和后序
+*/
+//前序
+void preOrderR(BinaryTreeNode *root)
+{
+	if (root != nullptr)
+	{
+		cout << root->key << " ";
+		preOrderR(root->left);
+		preOrderR(root->right);
+	}
+}
+
+void preOrder(BinaryTreeNode *root)
+{
+	if (root == nullptr)
+	{
+		return;
+	}
+
+	stack<BinaryTreeNode *> nodeS;
+	nodeS.push(root);
+	while (!nodeS.empty())
+	{
+		BinaryTreeNode *node = nodeS.top();
+		nodeS.pop();
+
+		cout << node->key << " ";
+
+		if (node->right != nullptr)
+			nodeS.push(node->right);
+
+		if (node->left != nullptr)
+			nodeS.push(node->left);
+
+	}
+	
+}
+
+//中序
+void inOrderR(BinaryTreeNode *root)
+{
+	if (root != nullptr)
+	{
+		inOrderR(root->left);
+		cout << root->key << " ";
+		inOrderR(root->right);
+	}
+}
+
+void inOrder(BinaryTreeNode *root)
+{
+	if (root == nullptr)
+		return;
+
+	stack<BinaryTreeNode *> nodeS;
+	nodeS.push(root);
+
+	while (!nodeS.empty())
+	{
+		BinaryTreeNode *current = nodeS.top();
+
+		//如果有左子树，那么还需要继续往下
+		if (current->left != nullptr)
+		{
+			nodeS.push(current->left);
+			continue;
+		}
+		else
+		{
+			cout << current->key << " ";
+			nodeS.pop();
+		}
+
+		//判断右子树为不为空
+		if (current->right != nullptr)
+		{
+			nodeS.push(current->right);
+		}
+	}
+}
+
+//后序
+void postOrderR(BinaryTreeNode *root)
+{
+	if (root != nullptr)
+	{
+		postOrderR(root->left);
+		postOrderR(root->right);
+		cout << root->key << " ";
+	}
+}
+
+void postOrder(BinaryTreeNode *root)
+{
+
 }
