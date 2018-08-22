@@ -322,3 +322,95 @@ void postOrder(BinaryTreeNode *root)
 	}
 	
 }
+
+/*
+分层遍历二叉树，遍历顺序按照从上往下，从左往右的顺序
+*/
+void LevelTraverse(BinaryTreeNode *root)
+{
+	if (root == nullptr)
+		return;
+	queue<BinaryTreeNode *> nodeQ;
+	BinaryTreeNode * current = nullptr;
+	nodeQ.push(root);
+
+	while (!nodeQ.empty())
+	{
+		current = nodeQ.front();
+		nodeQ.pop();
+
+		cout << current->key << " ";
+
+		if (current->left != nullptr)
+			nodeQ.push(current->left);
+
+		if (current->right != nullptr)
+			nodeQ.push(current->right);
+	}
+}
+
+/*
+将二叉树变成有序的双向链表
+root:二叉树的根节点指针
+pFirst：双向链表第一个节点指针
+pLast：双向链表的最后一个节点指针
+思路：
+1、如果二叉树为空，直接返回
+2、如果二叉树不为空：
+   2.1、如果左子树为空：根节点是双向链表的头结点，继续构建右子树的双向链表，将根节点
+		与右子树的双向链表连接，放到链表的头部。
+   2.2、如果左子树不为空：构建左子树的双向链表，此时左子树构建的链表的头指针就是整个
+		链表的头指针，然后将根节点连接到链表尾部。
+   2.3、如果右子树为空：根节点是双向链表的尾结点。
+   2.4、如果右子树不为空：构建右子树的双向链表，根节点与右子树链表头结点连接，右子树
+		的尾节点是整个链表的尾节点。
+*/
+void Convert(BinaryTreeNode *root, BinaryTreeNode *pFirst, BinaryTreeNode *pLast)
+{
+	pFirst = nullptr;
+	pLast = nullptr;
+	if (root == nullptr)
+		return;
+	
+	//左子树的头指针和尾指针
+	BinaryTreeNode *pFirstLeft = nullptr;
+	BinaryTreeNode *pLastLeft = nullptr;
+	//右子树的头指针和尾指针
+	BinaryTreeNode *pFirstRight = nullptr;
+	BinaryTreeNode *pLastRight = nullptr;
+
+	//1、先构建左子树的双向链表，然后将根节点放到左子树链表的尾部
+	if (root->left != nullptr)
+	{
+		//构建好左子树的双向链表
+		Convert(root->left, pFirstLeft, pLastLeft);
+		//左子树的头结点就是整个链表的头结点
+		pFirst = pFirstLeft;
+		//将根节点放在左子树链表的尾部
+		root->left = pLastLeft;
+		pLastLeft->right = root;
+	}
+	else
+	{
+		//如果左子树为空，根节点就是链表的头结点
+		pFirst = root;
+	}
+
+	//2、再构建右子树的双向链表，然后将右子树的双向链表与根节点连接
+	if (root->right != nullptr)
+	{
+		Convert(root->right, pFirstRight, pLastRight);
+		//右子树的尾节点是整个链表的尾节点
+		pLast = pLastRight;
+		//将根节点与右子树头结点连接
+		root->left = pFirstRight;
+		pFirstRight->left = root;
+	}
+	else
+	{
+		//根节点就是整个链表的尾节点
+		pLast = root;
+	}
+
+
+}

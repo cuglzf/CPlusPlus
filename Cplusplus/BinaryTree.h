@@ -24,3 +24,7 @@ void inOrder(BinaryTreeNode *root);
 
 void postOrderR(BinaryTreeNode *root);
 void postOrder(BinaryTreeNode *root);
+
+void LevelTraverse(BinaryTreeNode *root);
+
+void Convert(BinaryTreeNode *root, BinaryTreeNode *pFirst, BinaryTreeNode *pLast)
