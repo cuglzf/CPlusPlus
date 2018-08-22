@@ -207,10 +207,11 @@ void preOrder(BinaryTreeNode *root)
 	}
 
 	stack<BinaryTreeNode *> nodeS;
+	BinaryTreeNode *node = nullptr;
 	nodeS.push(root);
 	while (!nodeS.empty())
 	{
-		BinaryTreeNode *node = nodeS.top();
+		node = nodeS.top();
 		nodeS.pop();
 
 		cout << node->key << " ";
@@ -242,11 +243,12 @@ void inOrder(BinaryTreeNode *root)
 		return;
 
 	stack<BinaryTreeNode *> nodeS;
+	BinaryTreeNode *current = nullptr;
 	nodeS.push(root);
 
 	while (!nodeS.empty())
 	{
-		BinaryTreeNode *current = nodeS.top();
+		current = nodeS.top();
 
 		//如果有左子树，那么还需要继续往下
 		if (current->left != nullptr)
@@ -279,7 +281,44 @@ void postOrderR(BinaryTreeNode *root)
 	}
 }
 
+/*
+非递归的后序遍历相比较前序和中序来说，需要使用一个变量来保存前一个访问的节点
+通过判断该节点是否是栈顶节点的子节点，从而达到访问完左右孩子以后才进行根节点
+的访问，后序遍历入栈的顺序是：根->右孩子->左孩子。
+*/
 void postOrder(BinaryTreeNode *root)
 {
+	if (root == nullptr)
+		return;
 
+	stack<BinaryTreeNode *> nodeS;
+	BinaryTreeNode * current = nullptr; //当前节点
+	BinaryTreeNode *preNode = nullptr; //上一个访问的节点
+	nodeS.push(root);
+
+	while (!nodeS.empty())
+	{
+		current = nodeS.top();
+
+		//只有两种情况才可能去访问并出栈
+		//1、节点时叶子结点，即无左右孩子
+		//2、已经访问过该节点的孩子（左孩子或者右孩子）
+		if ((current->left == nullptr && current->right == nullptr) 
+			|| (preNode != nullptr && (preNode == current->left || preNode == current->right)))
+		{
+			cout << current->key << " ";
+			nodeS.pop();
+			preNode = current;
+		}
+		else
+		{
+			if (current->right != nullptr)
+				nodeS.push(current->right);
+
+			if (current->left != nullptr)
+				nodeS.push(current->left);
+		}
+
+	}
+	
 }
