@@ -99,9 +99,11 @@ void MaxHeapDown(int data[], int start, int end)
 	int l = 2 * c + 1;    //左孩子的位置
 	int temp = data[c];   //当前节点的大小
 
+	//首先节点start是否有孩子节点
 	while (l <= end)
 	{
 		//"l"是左孩子，"l+1"是右孩子
+		//获取孩子节点中大的那个
 		if (l < end && data[l] < data[l+1])
 		{
 			l++;                   //左右两孩子中选择较大者，即data[l+1]
@@ -113,6 +115,9 @@ void MaxHeapDown(int data[], int start, int end)
 			data[c] = data[l];
 			data[l] = temp;
 		}
+
+		//再次将要调整的根节点设为与根节点
+		//交换过值的子节点
 		c = l;
 		l = 2 * l + 1;
 	}
