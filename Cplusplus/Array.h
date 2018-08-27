@@ -12,3 +12,8 @@ bool HasPathCore(char *matrix, int rows, int columns, int row, int column, const
 bool HasPath(char *matrix, int rows, int columns, char *str);
 
 int MaxSubSum(int *numbers, int length);
+
+int GetDigitSum(int number);
+bool Check(int k, int rows, int columns, int row, int column, bool *visited);
+int MovingCountCore(int k, int rows, int columns, int row, int column, bool *visited);
+int MovingCount(int k, int rows, int columns);

@@ -270,3 +270,68 @@ int MaxSubSum(int *numbers, int length)
 	}
 	return maxSum;
 }
+
+/*
+剑指offer面试题13：机器人的运动范围
+题目：地上有一个m行n列的方格。一个机器人从坐标（0,0）的格子开始移动，它每次
+可以向左、右、上、下移动一格，但不能进入行坐标和列坐标的数位之和大于k的格子。
+例如：当k为18时，机器人能够进入方格（35,37），因为3+5+3+7=18<=18，但不能
+进入方格（35,38），因为3+5+3+8=19>18，问该机器人能够到达多少个格子？
+思路：
+	这个题与第12题类似，当机器人进入（i，j）格子时候判断数位之和是否满足要求，
+如果可以进入（i，j）格子，在判断此格子相邻的上下左右四个格子。
+*/
+int MovingCount(int k, int rows, int columns)
+{
+	if (k < 0 || rows < 1 || columns < 1)
+		return 0;
+
+	bool *visited = new bool[rows*columns];
+	for (int i = 0; i < rows*columns; i++)
+	{
+		visited[i] = false;
+	}
+
+	int count = MovingCountCore(k, rows, columns,0,0,visited);
+
+	delete[] visited;
+	return count;
+}
+
+int MovingCountCore(int k, int rows, int columns,int row,int column,bool *visited)
+{
+	int count = 0;
+	if (Check(k,rows,columns,row,column,visited))
+	{
+		visited[row*columns + column] = true;
+		count = MovingCountCore(k, rows, columns, row - 1, column, visited) +
+			MovingCountCore(k, rows, columns, row + 1, column, visited) +
+			MovingCountCore(k, rows, columns, row, column - 1, visited) +
+			MovingCountCore(k, rows, columns, row, column + 1, visited);
+
+	}
+	return count;
+}
+
+//注意判断此时（row，column）是否在格子内，没有被访问过且位数之和<=k
+bool Check(int k, int rows, int columns, int row, int column, bool *visited)
+{
+	if (row >= 0 && row < rows && column >= 0 && column < columns
+		&& GetDigitSum(row) + GetDigitSum(column) <= k
+		&& !visited[row*columns + column])
+	{
+		return true;
+	}
+	return false;
+}
+
+int GetDigitSum(int number)
+{
+	int sum = 0;
+	while (number > 0)
+	{
+		sum += number % 10;
+		number /= 10;
+	}
+	return sum;
+}
