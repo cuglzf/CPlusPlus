@@ -27,4 +27,8 @@ void postOrder(BinaryTreeNode *root);
 
 void LevelTraverse(BinaryTreeNode *root);
 
-void Convert(BinaryTreeNode *root, BinaryTreeNode *pFirst, BinaryTreeNode *pLast)
+void Convert(BinaryTreeNode *root, BinaryTreeNode *pFirst, BinaryTreeNode *pLast);
+
+int GetNodeNumKthLevel(BinaryTreeNode *root, int k);
+
+int GetLeafNodeNum(BinaryTreeNode *root);

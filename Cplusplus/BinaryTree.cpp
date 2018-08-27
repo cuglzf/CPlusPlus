@@ -411,6 +411,53 @@ void Convert(BinaryTreeNode *root, BinaryTreeNode *pFirst, BinaryTreeNode *pLast
 		//根节点就是整个链表的尾节点
 		pLast = root;
 	}
+}
 
+/*
+求二叉树第k层的节点个数
+思路：
+1、如果二叉树为空或者k<1，直接返回0
+2、如果二叉树不为空且k == 1，直接返回1
+3、如果二叉树不为空且k>1，返回左子树的k-1层节点+右子树的k-1层节点
 
+以上算法使用的是递归算法，如果不适用递归算法该如何实现呢？
+思路：可以采用两个队列来实现queue1和queue2，首先将根节点加入queue1并且k--
+当k>0时进入循环，依次去除queue1中节点并将其子节点加入queue2直至queue1中
+元素为空，然后将queue2中元素再导入到queue1，如此反复。最后返回queue1中
+的元素个数就是二叉树第k层的节点个数。
+*/
+int GetNodeNumKthLevel(BinaryTreeNode *root, int k)
+{
+	if (root == nullptr || k < 1)
+		return 0;
+
+	if (k == 1)
+		return 1;
+
+	int numLeft = GetNodeNumKthLevel(root->left, k - 1);
+	int numRight = GetNodeNumKthLevel(root->right, k - 1);
+
+	return (numLeft + numRight);
+}
+
+/*
+求二叉树中叶子节点的个数
+思路：与求k层节点个数类似
+1、如果二叉树为空，返回0
+2、如果二叉树不为空且左右子树为空，返回1
+3、如果二叉树不为空且左右子树不同时为空，返回
+左子树的叶子节点个数+右子树的叶子节点个数
+*/
+int GetLeafNodeNum(BinaryTreeNode *root)
+{
+	if (root == nullptr)
+		return 0;
+	
+	if (root->left == nullptr && root->right == nullptr)
+		return 1;
+
+	int numLeft = GetLeafNodeNum(root->left);
+	int numRight = GetLeafNodeNum(root->right);
+
+	return (numLeft + numRight);
 }
