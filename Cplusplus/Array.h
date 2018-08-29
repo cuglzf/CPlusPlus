@@ -17,3 +17,5 @@ int GetDigitSum(int number);
 bool Check(int k, int rows, int columns, int row, int column, bool *visited);
 int MovingCountCore(int k, int rows, int columns, int row, int column, bool *visited);
 int MovingCount(int k, int rows, int columns);
+
+int NumberOf1_normal(int n);

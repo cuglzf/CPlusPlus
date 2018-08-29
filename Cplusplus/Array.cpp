@@ -335,3 +335,36 @@ int GetDigitSum(int number)
 	}
 	return sum;
 }
+
+/*
+剑指offer面试题15：二进制中1的个数
+常规解法：
+定义一个无符号的1，每次让1与n做与运算，接着把1左移一位得到2继续与n做
+与运算，这样反复左移。
+利用位运算：
+一个数n&(n-1)等于把它最后边的一个1变成0，那它有多少个1就做多少次这样
+的运算。
+*/
+int NumberOf1_normal(int n)
+{
+	int count = 0;
+	unsigned int flag = 1;
+	while (flag)
+	{
+		if (n & flag)
+			count++;
+		flag = flag << 1;
+	}
+	return count;
+}
+
+int NumberOf1_bit(int n)
+{
+	int count = 0;
+	while (n)
+	{
+		n = n & (n - 1);
+		count++;
+	}
+	return count;
+}
